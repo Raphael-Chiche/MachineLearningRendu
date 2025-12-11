@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Reconnaissance de Lettres (Client-Side)</title>
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f4f4f9;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+      h1 {
+        color: #2c3e50;
+      }
+      .main-container {
+        display: flex;
+        gap: 40px;
+        align-items: center;
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Zone de dessin */
+      .canvas-container {
+        text-align: center;
+      }
+      canvas {
+        border: 2px solid #333;
+        border-radius: 10px;
+        cursor: crosshair;
+        background-color: black;
+        touch-action: none;
+      }
+
+      /* Contrôles */
+      .controls {
+        margin-top: 15px;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.2s;
+      }
+      .btn-clear {
+        background-color: #e74c3c;
+        color: white;
+      }
+      .btn-guess {
+        background-color: #3498db;
+        color: white;
+      }
+      button:hover {
+        opacity: 0.8;
+        transform: scale(1.05);
+      }
+
+      /* Résultats */
+      .result-box {
+        width: 150px;
+        text-align: center;
+      }
+      .prediction {
+        font-size: 80px;
+        font-weight: bold;
+        color: #27ae60;
+        margin: 0;
+        line-height: 1;
+      }
+      .confidence {
+        color: #7f8c8d;
+        font-size: 14px;
+      }
+      #loading {
+        font-size: 14px;
+        color: #e67e22;
+        font-weight: bold;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Dessine une lettre (A-Z)</h1>
+
+    <div id="loading">Chargement du modèle...</div>
+
+    <div class="main-container">
+      <div class="canvas-container">
+        <canvas id="drawingCanvas" width="280" height="280"></canvas>
+        <div class="controls">
+          <button class="btn-clear" onclick="clearCanvas()">Effacer</button>
+          <button class="btn-guess" onclick="predict()">Deviner</button>
+        </div>
+      </div>
+
+      <div class="result-box">
+        <p>Je vois un :</p>
+        <p id="pred-letter" class="prediction">?</p>
+        <p id="pred-conf" class="confidence">Confiance: 0%</p>
+      </div>
+    </div>
+    
+    <script src="script.js"></script>
+    
+  </body>
+</html>
